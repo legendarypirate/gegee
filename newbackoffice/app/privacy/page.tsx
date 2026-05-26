@@ -7,12 +7,12 @@ export default function PrivacyPolicyPage() {
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center space-x-3">
               <img
-                src="/superlogo.png"
-                alt="Super deliv Logo"
+                src="/image.png"
+                alt="Gegee Delivery Logo"
                 className="h-12 w-auto object-contain"
               />
               <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Super deliv
+                Gegee Delivery
               </span>
             </div>
             <a
@@ -44,7 +44,7 @@ export default function PrivacyPolicyPage() {
               <div className="space-y-4">
                 <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">1. Танилцуулга</h2>
                 <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-                  Super deliv нь таны хувийн мэдээллийг хамгаалах, хүндэтгэх үүднээс энэхүү нууцлалын бодлогыг боловсруулсан. Энэхүү бодлого нь манай компанид хэрхэн мэдээлэл цуглуулах, ашиглах, хадгалах, хуваалцах талаар тайлбарлана. Манай үйлчилгээг ашигласнаар та энэхүү бодлогыг хүлээн зөвшөөрч байна гэж үзнэ.
+                  Gegee Delivery нь таны хувийн мэдээллийг хамгаалах, хүндэтгэх үүднээс энэхүү нууцлалын бодлогыг боловсруулсан. Энэхүү бодлого нь манай компанид хэрхэн мэдээлэл цуглуулах, ашиглах, хадгалах, хуваалцах талаар тайлбарлана. Манай үйлчилгээг ашигласнаар та энэхүү бодлогыг хүлээн зөвшөөрч байна гэж үзнэ.
                 </p>
               </div>
 
@@ -200,7 +200,7 @@ export default function PrivacyPolicyPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                     </svg>
                     <span className="text-slate-700 dark:text-slate-300 font-medium">Компани:</span>
-                    <span className="text-slate-700 dark:text-slate-300">Super deliv</span>
+                    <span className="text-slate-700 dark:text-slate-300">Gegee Delivery</span>
                   </div>
                 </div>
               </div>
@@ -219,7 +219,7 @@ export default function PrivacyPolicyPage() {
       {/* Footer */}
       <footer className="bg-slate-900 dark:bg-slate-950 text-slate-300 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} Super deliv. Бүх эрх хуулиар хамгаалагдсан.</p>
+          <p>&copy; {new Date().getFullYear()} Gegee Delivery. Бүх эрх хуулиар хамгаалагдсан.</p>
         </div>
       </footer>
     </div>

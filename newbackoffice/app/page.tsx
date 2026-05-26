@@ -127,12 +127,12 @@ export default function LandingPage() {
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center space-x-3">
               <img
-                src="/superlogo.png"
-                alt="SuperDeli Logo"
+                src="/image.png"
+                alt="Gegee Delivery Logo"
                 className="h-12 w-auto object-contain"
               />
               <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                SuperDeliv
+                Gegee Delivery
               </span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
@@ -175,7 +175,7 @@ export default function LandingPage() {
                   Хот доторх хүргэлтийн үйлчилгээ
                 </h1>
                 <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
-                  SuperDeliv нь таны хүссэн бүх зүйлийг хурдан, найдвартай, найдвартайгаар хүргэх үйлчилгээг санал болгодог.
+                  Gegee Delivery нь таны хүссэн бүх зүйлийг хурдан, найдвартай, найдвартайгаар хүргэх үйлчилгээг санал болгодог.
                 </p>
               </div>
               <div className="flex flex-wrap gap-4">
@@ -202,8 +202,8 @@ export default function LandingPage() {
                     <div className="relative">
                       <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full blur-xl opacity-20 animate-pulse"></div>
                       <img
-                        src="/superlogo.png"
-                        alt="SuperDeli Logo"
+                        src="/image.png"
+                        alt="Gegee Delivery Logo"
                         className="w-32 h-auto object-contain relative z-10 drop-shadow-lg"
                       />
                     </div>
@@ -415,7 +415,7 @@ export default function LandingPage() {
                 Манай Апп татаж аваарай
               </h2>
               <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
-                SuperDeli аппыг татаж авснаар та захиалга өгөх, захиалгын байдлыг хянах, хүргэгчийн байршлыг мэдэх зэрэг олон давуу талтай болно.
+                Gegee Delivery аппыг татаж авснаар та захиалга өгөх, захиалгын байдлыг хянах, хүргэгчийн байршлыг мэдэх зэрэг олон давуу талтай болно.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button
@@ -453,8 +453,8 @@ export default function LandingPage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-3xl blur-2xl opacity-20 animate-pulse"></div>
                 <div className="relative bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-slate-800 dark:to-slate-700 rounded-3xl p-8 shadow-2xl">
                   <img
-                    src="/superlogo.png"
-                    alt="SuperDeli App"
+                    src="/image.png"
+                    alt="Gegee Delivery App"
                     className="w-64 h-auto object-contain mx-auto"
                   />
                 </div>
@@ -471,11 +471,11 @@ export default function LandingPage() {
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <img
-                  src="/superlogo.png"
-                  alt="SuperDeli Logo"
+                  src="/image.png"
+                  alt="Gegee Delivery Logo"
                   className="h-10 w-auto object-contain"
                 />
-                <span className="text-xl font-bold text-white">SuperDeli</span>
+                <span className="text-xl font-bold text-white">Gegee Delivery</span>
               </div>
               <p className="text-slate-400 text-sm leading-relaxed">
                 Хот доторх хүргэлтийн үйлчилгээ. Таны хүссэн бүх зүйлийг хурдан, найдвартайгаар хүргэх.
@@ -568,7 +568,7 @@ export default function LandingPage() {
           </div>
 
           <div className="border-t border-slate-800 pt-8 text-center text-sm text-slate-400">
-            <p>&copy; {new Date().getFullYear()} SuperDeli. Бүх эрх хуулиар хамгаалагдсан.</p>
+            <p>&copy; {new Date().getFullYear()} Gegee Delivery. Бүх эрх хуулиар хамгаалагдсан.</p>
           </div>
         </div>
       </footer>

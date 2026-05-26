@@ -311,8 +311,13 @@ export function Sidebar() {
 
   return (
     <aside className="w-64 bg-background border-r flex flex-col h-screen sticky top-0">
-      <div className="p-4 border-b">
-        <h1 className="text-lg font-bold">Super Deliv</h1>
+      <div className="p-4 border-b flex items-center gap-3">
+        <img
+          src="/image.png"
+          alt="Gegee Delivery Logo"
+          className="h-10 w-auto object-contain"
+        />
+        <h1 className="text-lg font-bold">Gegee Delivery</h1>
       </div>
       <nav className="flex-1 overflow-y-auto p-4 space-y-1">
         {filteredMenuItems.map((item) => renderMenuItem(item))}

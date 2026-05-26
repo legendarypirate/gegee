@@ -7,12 +7,12 @@ export default function SupportPage() {
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center space-x-3">
               <img
-                src="/superlogo.png"
-                alt="Super deliv Logo"
+                src="/image.png"
+                alt="Gegee Delivery Logo"
                 className="h-12 w-auto object-contain"
               />
               <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Super deliv
+                Gegee Delivery
               </span>
             </div>
             <a
@@ -206,7 +206,7 @@ export default function SupportPage() {
       {/* Footer */}
       <footer className="bg-slate-900 dark:bg-slate-950 text-slate-300 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} Super deliv. Бүх эрх хуулиар хамгаалагдсан.</p>
+          <p>&copy; {new Date().getFullYear()} Gegee Delivery. Бүх эрх хуулиар хамгаалагдсан.</p>
         </div>
       </footer>
     </div>
