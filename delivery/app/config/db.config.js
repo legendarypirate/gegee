@@ -1,9 +1,10 @@
 module.exports = {
-  HOST: "localhost",
-  USER: "postgres", // Postgres default username
-  PASSWORD: "Joker0328", // Enter your PostgreSQL password here
-  DB: "localexpress",
-  dialect: "postgres", // Change dialect to postgres
+  HOST: process.env.DB_HOST || "localhost",
+  USER: process.env.DB_USER || "postgres",
+  PASSWORD: process.env.DB_PASSWORD || "Joker0328",
+  DB: process.env.DB_NAME || "localexpress",
+  dialect: process.env.DB_DIALECT || "postgres",
+  port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 5432,
   pool: {
     max: 5,
     min: 0,

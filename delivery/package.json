@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
-    "seed:permissions": "node app/scripts/seedPermissions.js"
+    "seed:permissions": "node app/scripts/seedPermissions.js",
+    "seed:production": "node app/scripts/seedProductionPermissions.js"
   },
   "keywords": [
     "nodejs",
