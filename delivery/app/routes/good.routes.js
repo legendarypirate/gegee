@@ -4,16 +4,17 @@ module.exports = app => {
   
     var router = require("express").Router();
     
-    // Apply authentication middleware to all routes
+    // Legacy mobile flow uses this endpoint without auth header.
+    // Keep it public so "Шинэ хүргэлт нэмэх" can load goods.
+    router.get("/", good.findAll);
+
+    // Apply authentication middleware to protected routes
     router.use(authenticate);
 
     router.patch("/:id/stock", good.updateStock);
     router.get("/:id/history", good.getHistory);
     // Create a new Tutorial
     router.post("/", good.create);
-  
-    // Retrieve all Tutorials
-    router.get("/", good.findAll);
   
     // Retrieve all published Tutorials
     router.get("/published", good.findAllPublished);
