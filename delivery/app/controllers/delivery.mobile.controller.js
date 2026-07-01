@@ -306,23 +306,34 @@ exports.findByDeliverId = async (req, res) => {
 exports.report = async (req, res) => {
   const { driver_id, start_date, end_date } = req.query;
 
-  if (!start_date || !end_date) {
-    return res.status(400).json({ success: false, message: 'start_date and end_date are required' });
+  if (!driver_id) {
+    return res.status(400).json({ success: false, message: 'driver_id is required' });
   }
 
+  const tz = 'Asia/Ulaanbaatar';
+  const today = moment.tz(tz).format('YYYY-MM-DD');
+  const rangeStart = start_date || today;
+  const rangeEnd = end_date || today;
+  const rangeStartAt = moment.tz(`${rangeStart} 00:00:00`, tz).toDate();
+  const rangeEndAt = moment.tz(`${rangeEnd} 23:59:59.999`, tz).toDate();
+
   try {
-    // Build where clauses
-    const driverFilter = driver_id ? { driver_id } : {};
+    const driver = await User.findByPk(driver_id, {
+      attributes: ['id', 'report_price'],
+    });
+    const perDeliveryRate = Number(driver?.report_price) || 5000;
+
+    const driverFilter = { driver_id };
 
     // 1️⃣ Total deliveries per local date based on createdAt
     const totalDeliveries = await Delivery.findAll({
       where: driverFilter,
       attributes: [
-        [literal(`DATE("createdAt" AT TIME ZONE 'Asia/Ulaanbaatar')`), 'date'],
+        [literal(`DATE("createdAt" AT TIME ZONE '${tz}')`), 'date'],
         [fn('COUNT', col('id')), 'total_deliveries'],
       ],
-      having: literal(`DATE("createdAt" AT TIME ZONE 'Asia/Ulaanbaatar') BETWEEN '${start_date}' AND '${end_date}'`),
-      group: [literal(`DATE("createdAt" AT TIME ZONE 'Asia/Ulaanbaatar')`)],
+      having: literal(`DATE("createdAt" AT TIME ZONE '${tz}') BETWEEN '${rangeStart}' AND '${rangeEnd}'`),
+      group: [literal(`DATE("createdAt" AT TIME ZONE '${tz}')`)],
       raw: true,
     });
 
@@ -331,27 +342,36 @@ exports.report = async (req, res) => {
       where: {
         ...driverFilter,
         status: 3,
-        delivered_at: { [Op.between]: [new Date(`${start_date}T00:00:00+08:00`), new Date(`${end_date}T23:59:59+08:00`)] },
+        delivered_at: { [Op.between]: [rangeStartAt, rangeEndAt] },
       },
       attributes: [
-        [fn('DATE', col('delivered_at')), 'date'],
+        [literal(`DATE("delivered_at" AT TIME ZONE '${tz}')`), 'date'],
         [fn('COUNT', col('id')), 'delivered_count'],
         [fn('SUM', col('price')), 'delivered_total_price'],
-        [literal('COUNT(*) * 5000'), 'for_driver'],
-        [literal('SUM(price) - (COUNT(*) * 5000)'), 'driver_margin'],
       ],
-      group: [fn('DATE', col('delivered_at'))],
+      group: [literal(`DATE("delivered_at" AT TIME ZONE '${tz}')`)],
       raw: true,
     });
 
     // 3️⃣ Merge by date
     const resultMap = {};
     totalDeliveries.forEach(item => {
-      resultMap[item.date] = { total_deliveries: parseInt(item.total_deliveries) };
+      resultMap[item.date] = { total_deliveries: parseInt(item.total_deliveries, 10) || 0 };
     });
     deliveredStats.forEach(item => {
+      const deliveredCount = parseInt(item.delivered_count, 10) || 0;
+      const deliveredTotalPrice = parseFloat(item.delivered_total_price) || 0;
+      const forDriver = deliveredCount * perDeliveryRate;
+      const driverMargin = deliveredTotalPrice - forDriver;
+
       if (!resultMap[item.date]) resultMap[item.date] = {};
-      resultMap[item.date] = { ...resultMap[item.date], ...item };
+      resultMap[item.date] = {
+        ...resultMap[item.date],
+        delivered_count: deliveredCount,
+        delivered_total_price: deliveredTotalPrice,
+        for_driver: forDriver,
+        driver_margin: driverMargin,
+      };
     });
 
     // 4️⃣ Convert to array, sort DESC
@@ -360,13 +380,44 @@ exports.report = async (req, res) => {
       .map(date => ({
         date,
         total_deliveries: resultMap[date].total_deliveries || 0,
-        delivered_count: resultMap[date].delivered_count || '0',
-        delivered_total_price: resultMap[date].delivered_total_price || '0',
-        for_driver: resultMap[date].for_driver || '0',
-        driver_margin: resultMap[date].driver_margin || '0',
+        delivered_count: resultMap[date].delivered_count || 0,
+        delivered_total_price: resultMap[date].delivered_total_price || 0,
+        for_driver: resultMap[date].for_driver || 0,
+        driver_margin: resultMap[date].driver_margin || 0,
       }));
 
-    return res.json({ success: true, data: finalData });
+    // 5️⃣ Aggregated summary for the selected date range
+    const aggregate = await Delivery.findOne({
+      where: {
+        ...driverFilter,
+        status: 3,
+        delivered_at: { [Op.between]: [rangeStartAt, rangeEndAt] },
+      },
+      attributes: [
+        [fn('COUNT', col('id')), 'delivered_count'],
+        [fn('SUM', col('price')), 'delivered_total_price'],
+      ],
+      raw: true,
+    });
+
+    const deliveredCount = parseInt(aggregate?.delivered_count, 10) || 0;
+    const deliveredTotalPrice = parseFloat(aggregate?.delivered_total_price) || 0;
+    const driverIncome = deliveredCount * perDeliveryRate;
+    const companyTransfer = deliveredTotalPrice - driverIncome;
+
+    return res.json({
+      success: true,
+      summary: {
+        start_date: rangeStart,
+        end_date: rangeEnd,
+        delivered_count: deliveredCount,
+        delivered_total_price: deliveredTotalPrice,
+        per_delivery_rate: perDeliveryRate,
+        driver_income: driverIncome,
+        company_transfer: companyTransfer,
+      },
+      data: finalData,
+    });
   } catch (error) {
     console.error('Error generating delivery report:', error);
     return res.status(500).json({ success: false, message: 'Internal server error' });
