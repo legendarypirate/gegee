@@ -318,10 +318,7 @@ exports.report = async (req, res) => {
   const rangeEndAt = moment.tz(`${rangeEnd} 23:59:59.999`, tz).toDate();
 
   try {
-    const driver = await User.findByPk(driver_id, {
-      attributes: ['id', 'report_price'],
-    });
-    const perDeliveryRate = Number(driver?.report_price) || 5000;
+    const perDeliveryRate = 5000;
 
     const driverFilter = { driver_id };
 
